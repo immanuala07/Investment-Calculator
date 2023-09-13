@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+
+const initialUserInput = {
+	"current-savings": 1000,
+	"yearly-contribution": 1200,
+	"expected-return": 7,
+	duration: 10
+};
 
 const UserInput = ((props) => {
+  const [userInput, setUserInput] = useState(initialUserInput);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -9,12 +17,18 @@ const UserInput = ((props) => {
   };
 
   const resetHandler = () => {
-    //...
-    console.log("RESET");
+    setUserInput(initialUserInput);
   };
 
   const changeHandler = (input, value) => {
     console.log(input, value);
+
+    setUserInput((prevInput) => {
+      return {
+				...prevInput,
+				[input]: value
+			};
+    })
   };
   
   return (
@@ -25,6 +39,7 @@ const UserInput = ((props) => {
 					<input
 						type="number"
 						id="current-savings"
+						value={userInput["current-savings"]}
 						onChange={(event) => {
 							changeHandler("current-savings", event.target.value);
 						}}
@@ -35,6 +50,7 @@ const UserInput = ((props) => {
 					<input
 						type="number"
 						id="yearly-contribution"
+						value={userInput["yearly-contribution"]}
 						onChange={(event) => {
 							changeHandler("yearly-contribution", event.target.value);
 						}}
@@ -49,6 +65,7 @@ const UserInput = ((props) => {
 					<input
 						type="number"
 						id="expected-return"
+						value={userInput["expected-return"]}
 						onChange={(event) => {
 							changeHandler("expected-return", event.target.value);
 						}}
@@ -59,6 +76,7 @@ const UserInput = ((props) => {
 					<input
 						type="number"
 						id="duration"
+						value={userInput["duration"]}
 						onChange={(event) => {
 							changeHandler("duration", event.target.value);
 						}}
